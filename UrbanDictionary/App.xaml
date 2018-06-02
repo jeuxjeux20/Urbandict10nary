@@ -1,0 +1,18 @@
+﻿<Application
+    x:Class="UrbanDict10nary.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UrbanDictionary">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <AcrylicBrush x:Key="Bottom" BackgroundSource="Backdrop" TintColor="{ThemeResource SystemAccentColorDark2}" TintOpacity="0.7" FallbackColor="{ThemeResource SystemAccentColorDark2}" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <AcrylicBrush x:Key="Bottom" BackgroundSource="Backdrop" TintColor="{ThemeResource SystemAccentColorDark1}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorDark1}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

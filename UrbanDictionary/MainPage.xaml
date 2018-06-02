@@ -1,0 +1,119 @@
+﻿<Page
+    x:Class="UrbanDict10nary.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:dic="using:UrbanDictionnet"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <!-- VisualState to be triggered when window
+                         width is >=720 effective pixels. -->
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="searchBox.(Grid.ColumnSpan)"
+                                Value="1" />
+                        <Setter Target="resultsGrid.(Grid.Column)"
+                                    Value="1"/>
+                        <Setter Target="resultsGrid.(Grid.Row)"
+                                    Value="0"/>
+                        <Setter Target="resultsGrid.(Grid.RowSpan)"
+                                    Value="1"/>
+                        <Setter Target="row1.Height"
+                                Value="1*"/>
+                        <Setter Target="row2.Height"
+                                Value="Auto"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock FontSize="40" Margin="15">Urban dict<Bold>10</Bold>nary</TextBlock>
+
+        <Grid Grid.Row="1" Margin="15">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" x:Name="row1"/>
+                <RowDefinition Height="1*" x:Name="row2" />
+            </Grid.RowDefinitions>
+            <AutoSuggestBox VerticalAlignment="Top" Margin="10" QueryIcon="Find" 
+                            TextChanged="AutoSuggestBox_TextChanged" x:Name="searchBox"
+                            SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+                            QuerySubmitted="AutoSuggestBox_QuerySubmitted" Grid.ColumnSpan="2">
+                <AutoSuggestBox.ContextFlyout>
+                    <Flyout x:Name="NotFoundFlyout">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock>Word not found :'(</TextBlock>
+                            <Button Content="k then" Click="Button_Click" Margin="5"/>
+                        </StackPanel>
+                    </Flyout>
+                </AutoSuggestBox.ContextFlyout>
+            </AutoSuggestBox>
+            <Grid Grid.Column="0" Margin="5" Grid.Row="1" Grid.ColumnSpan="2" x:Name="resultsGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Viewbox StretchDirection="DownOnly" Visibility="Collapsed" x:Name="ResultContainer">
+                    <TextBlock FontSize="40" FontWeight="Bold" VerticalAlignment="Top"  HorizontalAlignment="Left" x:Name="Result">Results for :</TextBlock>
+                </Viewbox>
+                <ScrollViewer Grid.Row="1">
+                    <ItemsControl x:Name="WordItems" ScrollViewer.VerticalScrollMode="Enabled">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="dic:DefinitionData">
+                                <Grid BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" BorderThickness="2" Margin="0,3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Border Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}">
+                                        <TextBlock Margin="2" Typography.Capitals="AllPetiteCaps">Definition by <Run Text="{Binding Author}" FontWeight="Bold"/></TextBlock>
+                                    </Border>
+                                    <TextBlock TextWrapping="WrapWholeWords" Grid.Row="1" Margin="5">
+                                            <Run Text="{Binding Definition}"/>
+                                            <LineBreak/>
+                                            <Run Text="{Binding Example}" FontStyle="Italic" FontWeight="SemiLight"/>
+                                    </TextBlock>
+                                    <Border 
+                                            Background="{ThemeResource Bottom}"
+                                            Grid.Row="2" Padding="8">
+                                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal">
+                                                <SymbolIcon Symbol="Like" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding ThumbsUp}" Margin="5,0,0,0"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                                <SymbolIcon Symbol="Dislike" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding ThumbsDown}" Margin="5,0,0,0"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <CommandBar Grid.Row="2">
+            <AppBarButton Icon="Sync" Label="Random word" Click="AppBarButton_Click"/>
+        </CommandBar>
+    </Grid>
+</Page>
